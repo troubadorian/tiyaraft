@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jndiConfig xmlns="http://wsrf.globus.org/jndi/config">
+
+<!-- Instance service -->
+<service name="examples/filebuy/broker/FileBroker">
+	<resource name="home" type="org.globus.examples.services.filebuy.broker.impl.FileOrderResourceHome">
+	<resourceParams>
+
+		<parameter>
+			<name>resourceClass</name>
+			<value>org.globus.examples.services.filebuy.broker.impl.FileOrderResource</value>
+		</parameter>
+
+		<parameter>
+			<name>factory</name>
+			<value>org.globus.wsrf.jndi.BeanFactory</value>
+		</parameter>
+
+		<parameter>
+			<name>resourceKeyType</name>
+			<value>java.lang.String</value>
+		</parameter>
+
+		<parameter>
+			<name>resourceKeyName</name>
+			<value>{http://www.globus.org/namespaces/examples/filebuy/FileBroker}FileOrderResourceKey</value>
+		</parameter>
+		
+	</resourceParams>
+	</resource>
+	
+	<resource name="configuration" type="org.globus.examples.services.filebuy.broker.impl.FileBrokerConfiguration">
+	<resourceParams>
+		
+		<parameter>
+			<name>factory</name>
+			<value>org.globus.wsrf.jndi.BeanFactory</value>
+		</parameter>
+
+		<parameter>
+			<!-- Insert the URI of the VO index service here -->
+			<name>indexURI</name>
+			<value>https://127.0.0.1:8443/wsrf/services/DefaultIndexService</value>
+		</parameter>
+
+
+
+	</resourceParams>
+	</resource>		
+	
+</service>
+
+</jndiConfig>

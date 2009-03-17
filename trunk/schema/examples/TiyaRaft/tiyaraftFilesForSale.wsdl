@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="FilesForSale"
+    targetNamespace="http://www.globus.org/namespaces/examples/filebuy/FilesForSale"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:tns="http://www.globus.org/namespaces/examples/filebuy/FilesForSale"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsrp="http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.xsd"
+    xmlns:wsrpw="http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.wsdl"
+    xmlns:wsdlpp="http://www.globus.org/namespaces/2004/10/WSDLPreprocessor"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+<wsdl:import 
+    namespace=
+    "http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.wsdl"
+    location="../../wsrf/properties/WS-ResourceProperties.wsdl" />
+
+<types>
+<xsd:schema targetNamespace="http://www.globus.org/namespaces/examples/filebuy/FilesForSale"
+    xmlns:tns="http://www.globus.org/namespaces/examples/filebuy/FilesForSale"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+	<xsd:import
+	    namespace="http://schemas.xmlsoap.org/ws/2004/03/addressing"                
+	    schemaLocation="../../ws/addressing/WS-Addressing.xsd" />
+
+	<!-- Requests and responses -->
+	
+	<xsd:element name="fillOrder">
+		<xsd:complexType>
+		<xsd:sequence>
+			<xsd:element name="buyerEPR" ref="wsa:EndpointReference"/>
+		</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="fillOrderResponse">
+		<xsd:complexType/>
+	</xsd:element>
+
+
+	<!-- Resource properties -->
+
+	<xsd:element name="Name" type="xsd:string"/>
+	<xsd:element name="Location" type="xsd:string"/>
+	<xsd:element name="Price" type="xsd:float"/>
+
+	<xsd:element name="FileResourceProperties">
+	<xsd:complexType>
+		<xsd:sequence>
+			<xsd:element ref="tns:Name" minOccurs="1" maxOccurs="1"/>
+			<xsd:element ref="tns:Location" minOccurs="1" maxOccurs="1"/>
+			<xsd:element ref="tns:Price" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	</xsd:element>
+        
+</xsd:schema>
+</types>
+
+<message name="FillOrderInputMessage">
+	<part name="parameters" element="tns:fillOrder"/>
+</message>
+<message name="FillOrderOutputMessage">
+	<part name="parameters" element="tns:fillOrderResponse"/>
+</message>
+
+<portType name="FilesForSalePortType" 
+    wsdlpp:extends="wsrpw:GetResourceProperty wsrpw:GetMultipleResourceProperties"
+    wsrp:ResourceProperties="tns:FileResourceProperties">
+
+	<operation name="fillOrder">
+		<input message="tns:FillOrderInputMessage"/>
+		<output message="tns:FillOrderOutputMessage"/>
+	</operation>
+
+</portType>
+
+</definitions>

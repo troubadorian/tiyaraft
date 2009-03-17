@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="FilesForSaleFactoryService"
+    targetNamespace="http://www.globus.org/namespaces/examples/filebuy/FilesForSaleFactory"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:tns="http://www.globus.org/namespaces/examples/filebuy/FilesForSaleFactory"
+    xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/03/addressing" 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+
+<!--============================================================
+
+                      T Y P E S
+                      
+  ============================================================-->
+<types>
+<xsd:schema targetNamespace="http://www.globus.org/namespaces/examples/filebuy/FilesForSaleFactory"
+    xmlns:tns="http://www.globus.org/namespaces/examples/filebuy/FilesForSaleFactory"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+	<xsd:import
+	    namespace="http://schemas.xmlsoap.org/ws/2004/03/addressing"                
+	    schemaLocation="../../ws/addressing/WS-Addressing.xsd" />
+
+
+	<!-- REQUESTS AND RESPONSES -->
+
+	<xsd:element name="addFile">
+		<xsd:complexType>
+	    <xsd:sequence>
+    	    <xsd:element name="name" type="xsd:string"/>
+        	<xsd:element name="location" type="xsd:string"/>
+        	<xsd:element name="price" type="xsd:float"/>
+    	</xsd:sequence>
+	    </xsd:complexType>	
+	</xsd:element>
+	<xsd:element name="addFileResponse">
+	<xsd:complexType>
+		<xsd:sequence>
+			<xsd:element ref="wsa:EndpointReference"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	</xsd:element>
+        
+</xsd:schema>
+</types>
+
+
+<!--============================================================
+
+                       M E S S A G E S
+                      
+  ============================================================-->
+<message name="AddFileRequest">
+	<part name="request" element="tns:addFile"/>
+</message>
+<message name="AddFileResponse">
+	<part name="response" element="tns:addFileResponse"/>
+</message>
+
+
+
+<!--============================================================
+
+                       P O R T T Y P E
+                      
+  ============================================================-->
+<portType name="FilesForSaleFactoryPortType">
+
+	<operation name="addFile">
+		<input message="tns:AddFileRequest"/>
+		<output message="tns:AddFileResponse"/>
+	</operation>
+
+</portType>
+
+</definitions>

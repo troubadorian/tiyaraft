@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="FileBuyer"
+    targetNamespace="http://www.globus.org/namespaces/examples/filebuy/FileBuyer"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:tns="http://www.globus.org/namespaces/examples/filebuy/FileBuyer"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:wsrlw="http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.wsdl"    
+    xmlns:wsdlpp="http://www.globus.org/namespaces/2004/10/WSDLPreprocessor">
+   
+<wsdl:import 
+    namespace=
+    "http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.wsdl"
+    location="../../wsrf/lifetime/WS-ResourceLifetime.wsdl" />
+   
+    
+<types>
+<xsd:schema targetNamespace="http://www.globus.org/namespaces/examples/filebuy/FileBuyer"
+    xmlns:tns="http://www.globus.org/namespaces/examples/filebuy/FileBuyer"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+	<xsd:import
+	    namespace="http://schemas.xmlsoap.org/ws/2004/03/addressing"                
+	    schemaLocation="../../ws/addressing/WS-Addressing.xsd" />
+
+	<!-- Requests and responses -->
+	
+	<xsd:element name="purchase">
+		<xsd:complexType>
+		<xsd:sequence>
+			<xsd:element name="fileOrderEPR" ref="wsa:EndpointReference"/>
+		</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="purchaseResponse">
+		<xsd:complexType/>
+	</xsd:element>
+	
+	<xsd:element name="transfer">
+		<xsd:complexType>
+		<xsd:sequence>
+			<xsd:element name="name" type="xsd:string"/>
+			<xsd:element name="data" type="xsd:base64Binary"/>
+		</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="transferResponse">
+		<xsd:complexType/>
+	</xsd:element>
+        
+</xsd:schema>
+</types>
+
+<message name="PurchaseInputMessage">
+	<part name="parameters" element="tns:purchase"/>
+</message>
+<message name="PurchaseOutputMessage">
+	<part name="parameters" element="tns:purchaseResponse"/>
+</message>
+
+<message name="TransferInputMessage">
+	<part name="parameters" element="tns:transfer"/>
+</message>
+<message name="TransferOutputMessage">
+	<part name="parameters" element="tns:transferResponse"/>
+</message>
+
+<portType name="FileBuyerPortType" wsdlpp:extends="wsrlw:ImmediateResourceTermination">
+
+	<operation name="purchase">
+		<input message="tns:PurchaseInputMessage"/>
+		<output message="tns:PurchaseOutputMessage"/>
+	</operation>
+
+	<operation name="transfer">
+		<input message="tns:TransferInputMessage"/>
+		<output message="tns:TransferOutputMessage"/>
+	</operation>
+
+</portType>
+
+</definitions>
