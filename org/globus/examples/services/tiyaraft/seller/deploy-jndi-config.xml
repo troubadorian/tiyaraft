@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jndiConfig xmlns="http://wsrf.globus.org/jndi/config">
+
+<!-- Instance service -->
+<service name="examples/filebuy/seller/FilesForSale">
+	<resource name="home" type="org.globus.examples.services.filebuy.seller.impl.FileResourceHome">
+	<resourceParams>
+
+		<parameter>
+			<name>resourceClass</name>
+			<value>org.globus.examples.services.filebuy.seller.impl.FileResource</value>
+		</parameter>
+
+		<parameter>
+			<name>factory</name>
+			<value>org.globus.wsrf.jndi.BeanFactory</value>
+		</parameter>
+
+		<parameter>
+			<name>resourceKeyType</name>
+			<value>java.lang.String</value>
+		</parameter>
+
+		<parameter>
+			<name>resourceKeyName</name>
+			<value>{http://www.globus.org/namespaces/examples/filebuy/FilesForSale}FileResourceKey</value>
+		</parameter>
+
+		<parameter>
+			<name>cacheLocation</name>
+			<value>java:comp/env/services/examples/filebuy/seller/FilesForSale/cache</value>
+		</parameter>
+				
+	</resourceParams>
+	</resource>
+	
+	<resource name="cache" type="org.globus.wsrf.utils.cache.LRUCache">
+	<resourceParams>
+		<parameter>
+			<name>factory</name>
+			<value>org.globus.wsrf.jndi.BeanFactory</value>
+		</parameter>
+		<parameter>
+			<name>timeout</name>
+			<value>120000</value>
+		</parameter>
+	</resourceParams>
+	</resource>
+	
+	<resourceLink name="configuration" target="java:comp/env/services/examples/filebuy/seller/FilesForSaleFactory/configuration"/>
+</service>
+
+<!-- Factory service -->
+<service name="examples/filebuy/seller/FilesForSaleFactory">
+
+	<resource name="configuration" type="org.globus.examples.services.filebuy.seller.impl.FilesForSaleConfiguration">
+	<resourceParams>
+	
+		<parameter>
+			<name>factory</name>
+			<value>org.globus.wsrf.jndi.BeanFactory</value>
+		</parameter>
+
+		<parameter>
+			<name>instanceServicePath</name>
+			<value>examples/filebuy/seller/FilesForSale</value>
+		</parameter>
+		
+		<parameter>
+			<!-- Insert the URI of the file transfer service here -->
+			<name>transferURI</name>
+			<value>https://127.0.0.1:8443/wsrf/services/examples/filebuy/seller/FileTransfer</value>
+		</parameter>
+
+		
+	</resourceParams>
+	</resource>
+
+</service>
+
+</jndiConfig>

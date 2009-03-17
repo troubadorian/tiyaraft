@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment name="defaultServerConfig" xmlns="http://xml.apache.org/axis/wsdd/">
+
+    <service name="examples/filebuy/buyer/FileBuyer" provider="Handler" use="literal" style="document">
+        <parameter name="className" value="org.globus.examples.services.filebuy.buyer.impl.FileBuyerService"/>
+        <wsdlFile>share/schema/examples/FileBuy/FileBuyer_service.wsdl</wsdlFile>
+        <parameter name="securityDescriptor" value="etc/org_globus_examples_services_filebuy_buyer/security-config.xml"/>
+        <parameter name="allowedMethods" value="*"/>
+        <parameter name="handlerClass" value="org.globus.axis.providers.RPCProvider"/>
+        <parameter name="scope" value="Application"/>
+        <parameter name="providers" value="DestroyProvider"/>
+    </service>
+
+</deployment>

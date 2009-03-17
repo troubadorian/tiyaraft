@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="FileBroker"
+    targetNamespace="http://www.globus.org/namespaces/examples/filebuy/FileBroker"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:tns="http://www.globus.org/namespaces/examples/filebuy/FileBroker"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsrlw="http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.wsdl"    
+    xmlns:wsrp="http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.xsd"
+    xmlns:wsrpw="http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.wsdl"
+    xmlns:wsdlpp="http://www.globus.org/namespaces/2004/10/WSDLPreprocessor"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+<wsdl:import 
+    namespace=
+    "http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.wsdl"
+    location="../../wsrf/properties/WS-ResourceProperties.wsdl" />
+
+<wsdl:import 
+    namespace=
+    "http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.wsdl"
+    location="../../wsrf/lifetime/WS-ResourceLifetime.wsdl" />
+
+<types>
+<xsd:schema targetNamespace="http://www.globus.org/namespaces/examples/filebuy/FileBroker"
+    xmlns:tns="http://www.globus.org/namespaces/examples/filebuy/FileBroker"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+	<xsd:import
+	    namespace="http://schemas.xmlsoap.org/ws/2004/03/addressing"                
+	    schemaLocation="../../ws/addressing/WS-Addressing.xsd" />
+
+	<!-- Requests and responses -->
+	
+	<xsd:element name="find">
+		<xsd:complexType>
+		<xsd:sequence>
+    	    <xsd:element name="name" type="xsd:string"/>
+        	<xsd:element name="maxPrice" type="xsd:float"/>
+		</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="findResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+	        	<xsd:element name="price" type="xsd:float"/>
+				<xsd:element name="fileOrderEPR" ref="wsa:EndpointReference"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="purchase">
+		<xsd:complexType>
+		<xsd:sequence>
+			<xsd:element name="buyerEPR" ref="wsa:EndpointReference"/>
+		</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="purchaseResponse">
+		<xsd:complexType/>
+	</xsd:element>
+	
+	<xsd:element name="report" type="xsd:int"/>
+	<xsd:element name="reportResponse">
+		<xsd:complexType/>
+	</xsd:element>	
+
+
+	<!-- Resource properties -->
+
+	<xsd:element name="Name" type="xsd:string"/>
+	<xsd:element name="OrderStatus" type="xsd:string"/>
+
+	<xsd:element name="FileOrderResourceProperties">
+	<xsd:complexType>
+		<xsd:sequence>
+			<xsd:element ref="tns:Name" minOccurs="1" maxOccurs="1"/>
+			<xsd:element ref="tns:OrderStatus" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="FileEPR" ref="wsa:EndpointReference" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	</xsd:element>
+        
+</xsd:schema>
+</types>
+
+<message name="FindInputMessage">
+	<part name="parameters" element="tns:find"/>
+</message>
+<message name="FindOutputMessage">
+	<part name="parameters" element="tns:findResponse"/>
+</message>
+
+<message name="PurchaseInputMessage">
+	<part name="parameters" element="tns:purchase"/>
+</message>
+<message name="PurchaseOutputMessage">
+	<part name="parameters" element="tns:purchaseResponse"/>
+</message>
+
+<message name="ReportInputMessage">
+	<part name="parameters" element="tns:report"/>
+</message>
+<message name="ReportOutputMessage">
+	<part name="parameters" element="tns:reportResponse"/>
+</message>
+
+<portType name="FileBrokerPortType" 
+    wsdlpp:extends="wsrpw:GetResourceProperty
+                    wsrlw:ImmediateResourceTermination"    
+    wsrp:ResourceProperties="tns:FileOrderResourceProperties">
+
+	<operation name="find">
+		<input message="tns:FindInputMessage"/>
+		<output message="tns:FindOutputMessage"/>
+	</operation>
+
+	<operation name="purchase">
+		<input message="tns:PurchaseInputMessage"/>
+		<output message="tns:PurchaseOutputMessage"/>
+	</operation>
+	
+	<operation name="report">
+		<input message="tns:ReportInputMessage"/>
+		<output message="tns:ReportOutputMessage"/>
+	</operation>
+
+</portType>
+
+</definitions>

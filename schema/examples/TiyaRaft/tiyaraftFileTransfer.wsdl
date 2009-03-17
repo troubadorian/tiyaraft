@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="FileTransfer"
+    targetNamespace="http://www.globus.org/namespaces/examples/filebuy/FileTransfer"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:tns="http://www.globus.org/namespaces/examples/filebuy/FileTransfer"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/03/addressing">
+
+<types>
+<xsd:schema targetNamespace="http://www.globus.org/namespaces/examples/filebuy/FileTransfer"
+    xmlns:tns="http://www.globus.org/namespaces/examples/filebuy/FileTransfer"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+	<xsd:import
+	    namespace="http://schemas.xmlsoap.org/ws/2004/03/addressing"                
+	    schemaLocation="../../ws/addressing/WS-Addressing.xsd" />
+
+	<!-- Requests and responses -->
+	
+	<xsd:element name="transfer">
+		<xsd:complexType>
+		<xsd:sequence>
+			<xsd:element name="name" type="xsd:string"/>
+			<xsd:element name="location" type="xsd:string"/>
+			<xsd:element name="buyerEPR" ref="wsa:EndpointReference"/>
+		</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="transferResponse">
+		<xsd:complexType/>
+	</xsd:element>
+
+        
+</xsd:schema>
+</types>
+
+<message name="TransferInputMessage">
+	<part name="parameters" element="tns:transfer"/>
+</message>
+<message name="TransferOutputMessage">
+	<part name="parameters" element="tns:transferResponse"/>
+</message>
+
+<portType name="FileTransferPortType">
+
+	<operation name="transfer">
+		<input message="tns:TransferInputMessage"/>
+		<output message="tns:TransferOutputMessage"/>
+	</operation>
+
+</portType>
+
+</definitions>

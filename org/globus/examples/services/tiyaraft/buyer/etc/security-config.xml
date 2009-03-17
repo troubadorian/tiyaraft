@@ -1,0 +1,21 @@
+<securityConfig xmlns="http://www.globus.org">
+
+<authz value="none"/>
+
+<method name="purchase">
+  <run-as>
+    <caller-identity/>
+  </run-as>
+</method>
+
+<!-- Default for all methods -->
+<auth-method>
+    <GSITransport>
+      <protection-level>
+        <integrity/>
+      </protection-level>
+    </GSITransport>
+    <GSISecureConversation/>
+</auth-method>
+
+</securityConfig>

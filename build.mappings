@@ -1,0 +1,4 @@
+filebuy_seller,org/globus/examples/services/filebuy/seller,schema/examples/FileBuy/FilesForSale.wsdl,schema/examples/FileBuy/FilesForSaleFactory.wsdl
+filebuy_broker,org/globus/examples/services/filebuy/broker,schema/examples/FileBuy/FileBroker.wsdl
+filebuy_transfer,org/globus/examples/services/filebuy/transfer,schema/examples/FileBuy/FileTransfer.wsdl
+filebuy_buyer,org/globus/examples/services/filebuy/buyer,schema/examples/FileBuy/FileBuyer.wsdl
